@@ -1,5 +1,7 @@
 # Income Classification Project
-
+```bash
+git clone https://github.com/ssssssshy/adult_income_classifier
+```
 ## Описание
 Реализация моделей для бинарной классификации дохода (UCI Adult dataset).  
 Используемые модели: 
