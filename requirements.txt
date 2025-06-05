@@ -1,0 +1,26 @@
+# Core
+pandas
+numpy
+scikit-learn
+imbalanced-learn
+
+matplotlib
+seaborn
+
+# ML Models
+xgboost
+lightgbm
+torch
+
+# Visualization & Explainability
+shap
+
+# API (bonus)
+fastapi
+uvicorn
+
+# Utility
+jupyter
+kagglehub
+python-dotenv
+
