@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adult Income Classifier</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .feature-importance {
+            height: 300px;
+            margin-top: 20px;
+        }
+        .prediction-card {
+            margin-top: 20px;
+            display: none;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Adult Income Classifier</h1>
+        
+        <!-- Prediction Form -->
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Make a Prediction</h5>
+                        <form id="predictionForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="age" class="form-label">Age</label>
+                                    <input type="number" class="form-control" id="age" required min="17" max="90">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="workclass" class="form-label">Work Class</label>
+                                    <select class="form-select" id="workclass" required>
+                                        <option value="">Select work class</option>
+                                        <option value="1">Private</option>
+                                        <option value="2">Self-emp-not-inc</option>
+                                        <option value="3">Self-emp-inc</option>
+                                        <option value="4">Federal-gov</option>
+                                        <option value="5">Local-gov</option>
+                                        <option value="6">State-gov</option>
+                                        <option value="7">Without-pay</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="education" class="form-label">Education</label>
+                                    <select class="form-select" id="education" required>
+                                        <option value="">Select education</option>
+                                        <option value="1">Bachelors</option>
+                                        <option value="2">Some-college</option>
+                                        <option value="3">11th</option>
+                                        <option value="4">HS-grad</option>
+                                        <option value="5">Prof-school</option>
+                                        <option value="6">Assoc-acdm</option>
+                                        <option value="7">Assoc-voc</option>
+                                        <option value="8">9th</option>
+                                        <option value="9">7th-8th</option>
+                                        <option value="10">12th</option>
+                                        <option value="11">Masters</option>
+                                        <option value="12">1st-4th</option>
+                                        <option value="13">10th</option>
+                                        <option value="14">Doctorate</option>
+                                        <option value="15">5th-6th</option>
+                                        <option value="16">Preschool</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="education_num" class="form-label">Education Years</label>
+                                    <input type="number" class="form-control" id="education_num" required min="1" max="16">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="marital_status" class="form-label">Marital Status</label>
+                                    <select class="form-select" id="marital_status" required>
+                                        <option value="">Select marital status</option>
+                                        <option value="1">Married-civ-spouse</option>
+                                        <option value="2">Divorced</option>
+                                        <option value="3">Never-married</option>
+                                        <option value="4">Separated</option>
+                                        <option value="5">Widowed</option>
+                                        <option value="6">Married-spouse-absent</option>
+                                        <option value="7">Married-AF-spouse</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="occupation" class="form-label">Occupation</label>
+                                    <select class="form-select" id="occupation" required>
+                                        <option value="">Select occupation</option>
+                                        <option value="1">Tech-support</option>
+                                        <option value="2">Craft-repair</option>
+                                        <option value="3">Other-service</option>
+                                        <option value="4">Sales</option>
+                                        <option value="5">Exec-managerial</option>
+                                        <option value="6">Prof-specialty</option>
+                                        <option value="7">Handlers-cleaners</option>
+                                        <option value="8">Machine-op-inspct</option>
+                                        <option value="9">Adm-clerical</option>
+                                        <option value="10">Farming-fishing</option>
+                                        <option value="11">Transport-moving</option>
+                                        <option value="12">Priv-house-serv</option>
+                                        <option value="13">Protective-serv</option>
+                                        <option value="14">Armed-Forces</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="relationship" class="form-label">Relationship</label>
+                                    <select class="form-select" id="relationship" required>
+                                        <option value="">Select relationship</option>
+                                        <option value="1">Wife</option>
+                                        <option value="2">Own-child</option>
+                                        <option value="3">Husband</option>
+                                        <option value="4">Not-in-family</option>
+                                        <option value="5">Other-relative</option>
+                                        <option value="6">Unmarried</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="race" class="form-label">Race</label>
+                                    <select class="form-select" id="race" required>
+                                        <option value="">Select race</option>
+                                        <option value="1">White</option>
+                                        <option value="2">Asian-Pac-Islander</option>
+                                        <option value="3">Amer-Indian-Eskimo</option>
+                                        <option value="4">Other</option>
+                                        <option value="5">Black</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="sex" class="form-label">Sex</label>
+                                    <select class="form-select" id="sex" required>
+                                        <option value="">Select sex</option>
+                                        <option value="1">Male</option>
+                                        <option value="2">Female</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="capital_gain" class="form-label">Capital Gain</label>
+                                    <input type="number" class="form-control" id="capital_gain" required min="0">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="capital_loss" class="form-label">Capital Loss</label>
+                                    <input type="number" class="form-control" id="capital_loss" required min="0">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="hours_per_week" class="form-label">Hours per Week</label>
+                                    <input type="number" class="form-control" id="hours_per_week" required min="1" max="99">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="native_country" class="form-label">Native Country</label>
+                                    <select class="form-select" id="native_country" required>
+                                        <option value="">Select country</option>
+                                        <option value="1">United-States</option>
+                                        <option value="2">Cambodia</option>
+                                        <option value="3">England</option>
+                                        <option value="4">Puerto-Rico</option>
+                                        <option value="5">Canada</option>
+                                        <option value="6">Germany</option>
+                                        <option value="7">Outlying-US</option>
+                                        <option value="8">India</option>
+                                        <option value="9">Japan</option>
+                                        <option value="10">Greece</option>
+                                        <option value="11">South</option>
+                                        <option value="12">China</option>
+                                        <option value="13">Cuba</option>
+                                        <option value="14">Iran</option>
+                                        <option value="15">Honduras</option>
+                                        <option value="16">Philippines</option>
+                                        <option value="17">Italy</option>
+                                        <option value="18">Poland</option>
+                                        <option value="19">Jamaica</option>
+                                        <option value="20">Vietnam</option>
+                                        <option value="21">Mexico</option>
+                                        <option value="22">Portugal</option>
+                                        <option value="23">Ireland</option>
+                                        <option value="24">France</option>
+                                        <option value="25">Dominican-Republic</option>
+                                        <option value="26">Laos</option>
+                                        <option value="27">Ecuador</option>
+                                        <option value="28">Taiwan</option>
+                                        <option value="29">Haiti</option>
+                                        <option value="30">Columbia</option>
+                                        <option value="31">Hungary</option>
+                                        <option value="32">Guatemala</option>
+                                        <option value="33">Nicaragua</option>
+                                        <option value="34">Scotland</option>
+                                        <option value="35">Thailand</option>
+                                        <option value="36">Yugoslavia</option>
+                                        <option value="37">El-Salvador</option>
+                                        <option value="38">Trinadad&Tobago</option>
+                                        <option value="39">Peru</option>
+                                        <option value="40">Hong</option>
+                                        <option value="41">Holand-Netherlands</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Predict Income</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Loading Indicator -->
+                <div class="loading">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Making prediction...</p>
+                </div>
+
+                <!-- Prediction Result -->
+                <div class="card prediction-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Prediction Result</h5>
+                        <div class="alert" role="alert" id="predictionAlert"></div>
+                        <div id="featureImportance" class="feature-importance"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Show loading
+            document.querySelector('.loading').style.display = 'block';
+            document.querySelector('.prediction-card').style.display = 'none';
+            
+            // Collect form data
+            const features = [
+                parseInt(document.getElementById('age').value),
+                parseInt(document.getElementById('workclass').value),
+                parseInt(document.getElementById('education').value),
+                parseInt(document.getElementById('education_num').value),
+                parseInt(document.getElementById('marital_status').value),
+                parseInt(document.getElementById('occupation').value),
+                parseInt(document.getElementById('relationship').value),
+                parseInt(document.getElementById('race').value),
+                parseInt(document.getElementById('sex').value),
+                parseInt(document.getElementById('capital_gain').value),
+                parseInt(document.getElementById('capital_loss').value),
+                parseInt(document.getElementById('hours_per_week').value),
+                parseInt(document.getElementById('native_country').value),
+                0  // income (target variable)
+            ];
+
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ features }),
+                });
+
+                const result = await response.json();
+                
+                // Update prediction alert
+                const alert = document.getElementById('predictionAlert');
+                alert.className = `alert ${result.prediction === 1 ? 'alert-success' : 'alert-danger'}`;
+                alert.textContent = `Predicted Income: ${result.prediction === 1 ? '>50K' : '<=50K'} (Probability: ${(result.probability * 100).toFixed(2)}%)`;
+                
+                // Plot feature importance
+                const featureNames = Object.keys(result.feature_importance);
+                const importanceValues = Object.values(result.feature_importance);
+                
+                const trace = {
+                    x: importanceValues,
+                    y: featureNames,
+                    type: 'bar',
+                    orientation: 'h',
+                    marker: {
+                        color: 'rgb(55, 83, 109)'
+                    }
+                };
+
+                const layout = {
+                    title: 'Feature Importance',
+                    xaxis: { title: 'SHAP Value' },
+                    yaxis: { title: 'Feature' },
+                    height: 400,
+                    margin: { l: 150 }
+                };
+
+                Plotly.newPlot('featureImportance', [trace], layout);
+                
+                // Show prediction card
+                document.querySelector('.prediction-card').style.display = 'block';
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error making prediction. Please try again.');
+            } finally {
+                document.querySelector('.loading').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html> 
