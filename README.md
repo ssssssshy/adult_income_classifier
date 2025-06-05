@@ -6,22 +6,26 @@ A machine learning project for predicting income levels using the UCI Adult Cens
 ```
 adult_income_classifier/
 ├── app/                    # FastAPI web application
-│   └── main.py            # API endpoints and model serving
+│   └── main.py            # API endpoints and model serving (загрузка моделей, обработка запросов, возврат предсказаний)
 ├── data/                   # Data directory
-│   ├── raw/               # Original dataset
-│   └── processed/         # Preprocessed data
+│   ├── raw/               # Original dataset (исходные CSV/Excel файлы без изменений)
+│   └── processed/         # Preprocessed data (очищенные и преобразованные данные готовые для обучения)
 ├── models/                 # Trained model files
-│   ├── lightgbm_model.pkl
-│   ├── xgboost_model.pkl
-│   └── neural_net_model.pt
+│   ├── lightgbm_model.pkl  # Сохраненная модель LightGBM
+│   ├── xgboost_model.pkl   # Сохраненная модель XGBoost
+│   └── neural_net_model.pt # Сохраненная нейросетевая модель PyTorch
 ├── notebooks/             # Jupyter notebooks for analysis
+│   └── exploration.ipynb  # Ноутбук с анализом данных и экспериментами (опционально)
 ├── src/                   # Source code
-│   ├── data/             # Data processing modules
-│   ├── models/           # Model definitions
-│   └── utils/            # Utility functions
-├── requirements.txt       # Project dependencies
-├── report.md             # Project report and analysis
-└── README.md             # This file
+│   ├── data_balancing.py  # Скрипт для балансировки классов (SMOTE, undersampling и т.д.)          
+│   ├── data_preprocessing.py # Скрипт для очистки и преобразования данных
+│   ├── download_data.py    # Скрипт для загрузки исходного датасета
+│   ├── train_models.py     # Основной скрипт обучения моделей
+│   ├── training_models_for_final_comparison.py # Финалное сравнение моделей с подбором гиперпараметров
+│   └── visualize_data.py  # Скрипты для генерации графиков и визуализаций            
+├── requirements.txt       # Project dependencies (список всех зависимостей Python)
+├── report.md             # Project report and analysis (анализ результатов, метрик, выводы)
+└── README.md             # Основной файл с описанием проекта, инструкциями по установке и запуску
 ```
 
 ## Features
